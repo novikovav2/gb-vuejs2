@@ -1,37 +1,36 @@
 <template>
   <div :class="$style.paginator">
     <a href v-for="i in countOfPages" :key="i" @click.prevent="pageSelect(i)" :class="$style.link">
-      <span :class="$style.active" v-if="i === currentPage">{{ i }}</span>
+      <span :class="$style.active" v-if="i === getCurrentPage">{{ i }}</span>
       <span v-else>{{ i }}</span>
     </a>
   </div>
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex'
+
 export default {
   name: "Paginator",
-  props: {
-    total: {
-      type: Number,
-      default: () => { 5 }
-    },
-    itemsOnPage: {
-      type: Number,
-      default: () => { 5 }
-    },
-    currentPage: {
-      type: Number,
-      default: () => { 1 }
-    }
-  },
   computed: {
+    ...mapGetters([
+      "getTotalPaymentsCount",
+      "getCurrentPage",
+      "getItemsOnPage"
+    ]),
     countOfPages: function () {
-      return Math.ceil(this.total / this.itemsOnPage)
+      return Math.ceil(this.getTotalPaymentsCount / this.getItemsOnPage)
     }
   },
   methods: {
+    ...mapActions([
+       "changeCurrentPage",
+       "fetchData"
+    ]),
     pageSelect(page) {
-      this.$emit('pageChange', page)
+      // this.$emit('pageChange', page)
+      this.changeCurrentPage(page)
+      this.fetchData()
     }
   }
 }

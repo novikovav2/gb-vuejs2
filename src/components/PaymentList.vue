@@ -11,7 +11,7 @@
       </tr>
       </thead>
       <tbody>
-        <tr v-for="payment in payments" :key="payment.id">
+        <tr v-for="payment in getPayments" :key="payment.id">
           <td>{{ payment.id }}</td>
           <td>{{ payment.date }}</td>
           <td>{{ payment.descr }}</td>
@@ -23,13 +23,14 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
   name: "PaymentList",
-  props: {
-    payments: {
-      type: Array,
-      default: () => []
-    }
+  computed: {
+    ...mapGetters([
+        'getPayments'
+    ])
   }
 }
 </script>

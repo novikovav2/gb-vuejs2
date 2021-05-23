@@ -5,11 +5,8 @@
       {{ showFormText }}
     </button>
     <PaymentForm @add="onAdd" v-if="showForm"/>
-    <PaymentList :payments="paymentsForShow"/>
-    <Paginator :total="payments.length"
-               :items-on-page="itemsOnPage"
-               :currentPage="currentPage"
-               @pageChange="pageChange"/>
+    <PaymentList />
+    <Paginator />
   </div>
 </template>
 
@@ -18,6 +15,8 @@ import PaymentForm from "@/components/PaymentForm";
 import PaymentList from "@/components/PaymentList";
 import defaultPaymentValues from "@/data/payments";
 import Paginator from "@/components/Paginator";
+
+import { mapActions} from 'vuex'
 
 export default {
   name: 'App',
@@ -34,25 +33,18 @@ export default {
     itemsOnPage: 5
   }),
   methods: {
+    ...mapActions([
+        'init',
+        'fetchData'
+    ]),
     switchShowForm () {
       this.showForm = !this.showForm
       this.showFormText = this.showForm ? 'Hide form' : 'ADD NEW COST+'
-    },
-    onAdd (data) {
-      this.payments.push(data)
-    },
-    pageChange (page) {
-      this.currentPage = page
     }
   },
-  computed: {
-    paymentsForShow: function () {
-      const payments = this.payments
-      const itemsOnPage = this.itemsOnPage
-      const currentPage = this.currentPage
-      // Вырезаем из массива нужные нам элементы
-      return payments.slice(itemsOnPage * (currentPage - 1), itemsOnPage * currentPage)
-    }
+  mounted() {
+    this.init()
+    this.fetchData()
   }
 }
 </script>
