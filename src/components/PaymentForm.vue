@@ -27,10 +27,13 @@ export default {
   name: "PaymentForm",
   data: () => ({
     date: new Date().toISOString().slice(0,10),
-    description: '',
-    value: 0,
+    description: null,
+    value: null,
     id: 100
   }),
+  props: [
+      'paramValue'
+  ],
   methods: {
     ...mapMutations([
         'addPayments'
@@ -45,6 +48,20 @@ export default {
       // this.$emit('add', payment)
       this.addPayments([ payment ] )
       ++this.id
+    }
+  },
+  mounted() {
+    if (this.$route.params.category) {
+      this.description = this.$route.params.category
+    }
+    if (this.paramValue) {
+      this.value = this.paramValue
+    }
+
+    if (this.description && this.value) {
+      this.onSubmit()
+      console.log("Data added")
+      this.$router.push('/')
     }
   }
 }

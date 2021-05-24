@@ -1,36 +1,38 @@
 <template>
   <div id="app">
     <h1>Учет расходов</h1>
-    <button @click="switchShowForm" :class="$style.showForm">
-      {{ showFormText }}
-    </button>
-    <PaymentForm @add="onAdd" v-if="showForm"/>
-    <PaymentList />
-    <Paginator />
+<!--    <button @click="switchShowForm" :class="$style.showForm">-->
+<!--      {{ showFormText }}-->
+<!--    </button>-->
+<!--    <PaymentForm @add="onAdd" v-if="showForm"/>-->
+<!--    <PaymentList />-->
+<!--    <Paginator />-->
+
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
-import PaymentForm from "@/components/PaymentForm";
-import PaymentList from "@/components/PaymentList";
-import defaultPaymentValues from "@/data/payments";
-import Paginator from "@/components/Paginator";
+// import PaymentForm from "@/components/PaymentForm";
+// import PaymentList from "@/components/PaymentList";
+// import defaultPaymentValues from "@/data/payments";
+// import Paginator from "@/components/Paginator";
 
 import { mapActions} from 'vuex'
 
 export default {
   name: 'App',
   components: {
-    PaymentForm,
-    PaymentList,
-    Paginator
+    // PaymentForm,
+    // PaymentList,
+    // Paginator
   },
   data: () => ({
-    payments: defaultPaymentValues.payments,
+    // payments: defaultPaymentValues.payments,
     showForm: false,
     showFormText: 'ADD NEW COST+',
-    currentPage: 1,
-    itemsOnPage: 5
+    // currentPage: 1,
+    // itemsOnPage: 5
   }),
   methods: {
     ...mapActions([
