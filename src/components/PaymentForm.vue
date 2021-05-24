@@ -21,6 +21,8 @@
 </template>
 
 <script>
+import { mapMutations } from 'vuex'
+
 export default {
   name: "PaymentForm",
   data: () => ({
@@ -30,6 +32,9 @@ export default {
     id: 100
   }),
   methods: {
+    ...mapMutations([
+        'addPayments'
+    ]),
     onSubmit () {
       const payment = {
         id: this.id,
@@ -37,7 +42,8 @@ export default {
         descr: this.description,
         value: this.value
       }
-      this.$emit('add', payment)
+      // this.$emit('add', payment)
+      this.addPayments([ payment ] )
       ++this.id
     }
   }
